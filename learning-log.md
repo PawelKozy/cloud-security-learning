@@ -1,62 +1,43 @@
 # Learning Log
 
-This file will record daily updates about my cloud security experiments. As scripts are added under directories such as `Security-Automation` and `micro-projects`, they will be referenced here for quick access.
+This log captures daily updates for cloud security experiments. As scripts are added under directories such as `Security-Automation` and `micro-projects`, they will be referenced here for quick access.
 
-2025-06-07 – Day 1: Amazon ECR
+## 2025-06-07 – Day 1: Amazon ECR
 
-🔍 Key Features
+### Key Features
 
-Amazon ECR is a fully managed container registry supporting OCI-compliant image storage.
+- Fully managed container registry supporting OCI images
+- Public and private repositories with high durability
+- Lifecycle policies to prune old or unused images
+- Supports tagging strategies for region or stage
+- Access control via IAM policies and repository resource policies
+- Basic scanning with Clair and enhanced scanning via Amazon Inspector
+- Audit actions through CloudTrail
 
-Offers public and private repositories.
+### Authentication
 
-Highly available and durable by design.
+```bash
+aws ecr get-login-password --region us-west-2 | \
+  docker login --username AWS --password-stdin <repo-url>
+```
 
-Integrates with lifecycle policies to automatically remove old/unused images.
+Alternatively you can call the token directly via cURL:
 
-Supports tagging for managing regional differences or lifecycle stages.
-
-Fine-grained access via IAM policies and repository-based resource policies (e.g., cross-account access).
-
-Security scanning:
-
-Basic scanning with Clair.
-
-Enhanced scanning with Amazon Inspector, with alerts routed via EventBridge.
-
-Auditability through CloudTrail events for ECR actions.
-
-🔐 Authentication
-
-aws ecr get-login-password provides a 12-hour token for Docker login:
-
-aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin <repo-url>
-
-Can also use token via HTTP:
-
+```bash
 curl -i -H "Authorization: Basic $TOKEN" https://<account-id>.dkr.ecr.<region>.amazonaws.com
+```
 
-🧪 Labs Completed
+### Labs Completed
 
-IAM User Setup: Created IAM user with CLI access using Terraform (aws_iam_user, aws_iam_access_key, aws_iam_user_policy).
+- Created an IAM user for CLI access via Terraform
+- Provisioned QA and production ECR repositories with different policies
+- Verified policy enforcement by attempting unauthorized pushes
+- Enabled enhanced scanning and inspected findings using:
+  - `aws ecr describe-images --repository-name <repo>`
+  - `aws ecr describe-image-scan-findings --repository-name <repo> --image-id imageDigest=<digest>`
+- Built a Terraform module to configure registry scanning
 
-ECR Repositories:
-
-Created two ECR repositories with different policies (QA and Prod).
-
-Validated policy enforcement by attempting to push to the wrong repo.
-
-Vulnerability Scanning:
-
-Enabled enhanced scanning for repos.
-
-Used aws ecr describe-image-scan-findings to fetch results.
-
-aws ecr describe-images --repository-name <repo>
-aws ecr describe-image-scan-findings --repository-name <repo> --image-id imageDigest=<digest>
-
-Terraform Practice: Built end-to-end provisioning using random_string, aws_ecr_repository, and scanning configuration:
-
+```terraform
 resource "aws_ecr_registry_scanning_configuration" "test" {
   scan_type = "ENHANCED"
 
@@ -76,31 +57,16 @@ resource "aws_ecr_registry_scanning_configuration" "test" {
     }
   }
 }
+```
 
-📌 Topics Covered
+### Topics Covered
 
-ECR access policies: IAM vs repository-based
+- IAM vs repository-based access policies
+- Container image scanning and Inspector integration
+- Docker login and AWS token authentication
+- Terraform automation for registry provisioning
 
-Container image scanning and Inspector integration
+### Experiments & Ideas
 
-Docker login and AWS token auth
+See [AWS/ECR/notes/ideas.md](AWS/ECR/notes/ideas.md) for a list of future experiments and next steps.
 
-Terraform automation for registry provisioning
-
-⚙️ Experiments & Ideas
-
-Try uploading images with critical CVEs and test event notifications.
-
-Explore lifecycle_policy to auto-delete old images based on tags.
-
-Compare scan coverage: Clair vs Amazon Inspector.
-
-🔜 Next Steps
-
-Implement push pipeline to ECR from local Docker.
-
-Explore repository replication across regions.
-
-Continue into IAM fine-tuning for repo-specific access.
-
-Begin container security configuration (runtime, secrets, etc.)
