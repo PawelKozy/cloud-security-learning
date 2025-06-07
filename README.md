@@ -16,6 +16,9 @@ This repository is a personal space for experimenting with cloud security concep
 - **notes/** – log files and study notes
 - **micro-projects/** – smaller reusable scripts
 
+Each main directory also contains `scripts/` and `notes/` folders for automation
+examples and reference material.
+
 ## Topics
 
 This repo covers various services including:
