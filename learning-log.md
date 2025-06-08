@@ -69,6 +69,7 @@ resource "aws_ecr_registry_scanning_configuration" "test" {
 ### Experiments & Ideas
 
 See [AWS/ECR/notes/ideas.md](AWS/ECR/notes/ideas.md) for a list of future experiments and next steps.
+See [AWS/ECR/notes/ecr-monitoring.md](AWS/ECR/notes/ecr-monitoring.md) for CloudTrail monitoring and Athena queries.
 
 #### Immutable Tags
 
