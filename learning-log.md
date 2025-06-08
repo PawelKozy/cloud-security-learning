@@ -115,3 +115,8 @@ LIMIT 50;
 
 ### Image Scanning Audit
 - Wrote a Python script to report critical scan findings. See [AWS/ECR/scripts/scan_audit.py](AWS/ECR/scripts/scan_audit.py) and [AWS/ECR/notes/scan-audit.md](AWS/ECR/notes/scan-audit.md).
+
+## 2025-06-08 – Attacking Docker Containers
+- Documented the container threat landscape and attack vectors in `containers/Docker/attacks/docker_attack_notes.md`.
+- Created placeholder demos for privilege escalation, namespace escapes, and auditing Docker usage.
+- Added reference material on capabilities, dangerous flags, and escape techniques.
