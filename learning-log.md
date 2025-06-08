@@ -90,3 +90,28 @@ aws ecr put-image-tag-mutability \
   --image-tag-mutability IMMUTABLE
 ```
 
+
+## 2025-06-08 – Day 2: Logging and Monitoring
+
+### Tag Immutability
+- Enabled immutable tags through Terraform and verified enforcement with the AWS CLI.
+
+### CloudTrail Logging
+- Configured a trail to capture ECR actions for auditing. Steps documented in [AWS/ECR/notes/ecr-monitoring.md](AWS/ECR/notes/ecr-monitoring.md).
+
+### Athena Queries
+- Created a table over the CloudTrail bucket and executed:
+
+```sql
+SELECT eventTime, eventName, userIdentity.userName
+FROM ecr_cloudtrail_logs
+WHERE eventSource = 'ecr.amazonaws.com'
+ORDER BY eventTime DESC
+LIMIT 50;
+```
+
+### EventBridge Integration
+- Added rules to notify on image pushes. Details in [AWS/ECR/notes/eventbridge.md](AWS/ECR/notes/eventbridge.md).
+
+### Image Scanning Audit
+- Wrote a Python script to report critical scan findings. See [AWS/ECR/scripts/scan_audit.py](AWS/ECR/scripts/scan_audit.py) and [AWS/ECR/notes/scan-audit.md](AWS/ECR/notes/scan-audit.md).
