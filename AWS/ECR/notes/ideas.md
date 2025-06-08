@@ -14,4 +14,5 @@ These notes capture experiments and potential follow-up tasks for improving Amaz
 - Evaluate repository replication across regions for high availability.
 - Tighten IAM permissions for repository-specific roles.
 - Plan container runtime security controls and secrets management.
+- Enable immutable tags so CI/CD pipelines can't inadvertently replace released images.
 

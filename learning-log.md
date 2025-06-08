@@ -70,3 +70,22 @@ resource "aws_ecr_registry_scanning_configuration" "test" {
 
 See [AWS/ECR/notes/ideas.md](AWS/ECR/notes/ideas.md) for a list of future experiments and next steps.
 
+#### Immutable Tags
+
+To ensure images are never overwritten, ECR supports immutable tags. Once enabled, pushing a tag that already exists results in an error.
+
+```terraform
+resource "aws_ecr_repository" "example" {
+  name                 = "example"
+  image_tag_mutability = "IMMUTABLE"
+}
+```
+
+This can also be configured through the AWS CLI:
+
+```bash
+aws ecr put-image-tag-mutability \
+  --repository-name example \
+  --image-tag-mutability IMMUTABLE
+```
+
