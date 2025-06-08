@@ -1,33 +1,77 @@
-# Cloud Security Learning
+# ☁️ Cloud Security Learning Lab
 
-## Overview
+This repository documents my hands-on journey in cloud and application security across major platforms like **AWS**, **Azure**, and **GCP**. It blends practical experiments, real-world attack-defense simulations, detection engineering, and automation workflows into a structured and evolving knowledge base.
 
-This repository is a personal space for experimenting with cloud security concepts across multiple platforms. It organizes notes and reusable scripts for reference.
+All code, notes, and labs are written from scratch — no licensed or proprietary content is included.
 
-## Structure
+---
 
-- **AWS/** – service examples and experiments
-- **Azure/** – service examples and experiments
-- **GCP/** – service examples and experiments
-- **containers/** – Kubernetes and Docker materials
+## 📁 Repository Structure
 
-The repository focuses on the major cloud providers along with container
-security examples. Legacy directories for DevSecOps topics and automation have
-been removed to simplify the layout.
+cloud-security-learning/
+|
+├── AWS/
+│   ├── IAM/
+│   │   ├── detection/
+│   │   ├── attacks/
+│   │   ├── response/
+│   │   └── notes.md
+│   ├── ECR/
+│   │   ├── detection/
+│   │   ├── attacks/
+│   │   ├── response/
+│   │   └── notes.md
+│
+├── Azure/
+│   ├── AzureAD/
+│   │   ├── detection/
+│   │   ├── response/
+│   │   └── notes.md
+│
+├── notes/
+│   └── learning-log.md
 
-Service folders now share a common layout containing `detection/`, `attack/`,
-`config/`, and a `notes.md` file for quick references. Additional `scripts/` or
-`notes/` directories may appear where more detailed examples are provided.
+├── micro-projects/
+│   ├── ecr-vuln-scan-summary.py
+│   └── rotate-secrets.py
 
-## Topics
+└── README.md
 
-This repo covers various services including:
+---
 
-- AWS (IAM, S3, Lambda, ECR, CloudTrail, Secrets Manager)
-- Azure (Azure AD, Sentinel, Logic Apps, Functions, Defender for Cloud)
-- GCP (IAM, GCS, Cloud Logging)
-- Container security with Kubernetes and Docker
+## 🔍 Topics Covered
 
-## Disclaimer
+- Identity and access abuse detection
+- Container image scanning and hardening (ECR, ACR)
+- Infrastructure misconfiguration and runtime hardening
+- Automation with Python (Boto3), AWS CLI, and Terraform
+- Cloud-native incident response (IR) playbooks
+- Threat modeling and defensive baselining
+- Telemetry design for multi-cloud environments
+- Working with services like CloudTrail, GuardDuty, Azure Sentinel, etc.
 
-All content here is intended for personal learning based on public knowledge. None of the materials reference commercial training platforms or proprietary resources.
+---
+
+## 🛠️ Labs & Tools
+
+This repo includes real-world scenarios where I:
+
+- Simulate cloud attacks (e.g., IAM privilege escalation, SSRF)
+- Write detection-as-code logic in SQL/KQL
+- Automate remediation tasks using Lambda, Logic Apps, and SOAR APIs
+- Deploy Terraform-managed infrastructure (with security focus)
+- Use Boto3 scripts for ECR scanning and secret rotation
+
+---
+
+## 🚧 Work in Progress
+
+This is an evolving project. The focus is on building reusable knowledge blocks, rather than showcasing polished products. Daily logs are updated in [`notes/learning-log.md`](./notes/learning-log.md).
+
+---
+
+## 🙋‍♂️ Why This Repo?
+
+- **To stay sharp** in an ever-evolving threat landscape    
+- **To bridge gaps** between theory and practice in cloud security    
+- **To demonstrate practical expertise** through reproducible labs and detection logic    
