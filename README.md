@@ -10,14 +10,14 @@ This repository is a personal space for experimenting with cloud security concep
 - **Azure/** – service examples and experiments
 - **GCP/** – service examples and experiments
 - **containers/** – Kubernetes and Docker materials
-- **DevSecOps/** – CI/CD, SBOM, SAST topics
-- **Infrastructure-Hardening/** – securing underlying systems
-- **Security-Automation/** – scripts for automating security tasks
-- **notes/** – log files and study notes
-- **micro-projects/** – smaller reusable scripts
 
-Each main directory also contains `scripts/` and `notes/` folders for automation
-examples and reference material.
+The repository focuses on the major cloud providers along with container
+security examples. Legacy directories for DevSecOps topics and automation have
+been removed to simplify the layout.
+
+Service folders now share a common layout containing `detection/`, `attack/`,
+`config/`, and a `notes.md` file for quick references. Additional `scripts/` or
+`notes/` directories may appear where more detailed examples are provided.
 
 ## Topics
 
@@ -27,7 +27,6 @@ This repo covers various services including:
 - Azure (Azure AD, Sentinel, Logic Apps, Functions, Defender for Cloud)
 - GCP (IAM, GCS, Cloud Logging)
 - Container security with Kubernetes and Docker
-- DevSecOps practices such as CI/CD pipelines, SBOM generation, and SAST
 
 ## Disclaimer
 

@@ -1,6 +1,6 @@
 # Learning Log
 
-This log captures daily updates for cloud security experiments. As scripts are added under directories such as `Security-Automation` and `micro-projects`, they will be referenced here for quick access.
+This log captures daily updates for cloud security experiments. Notes on detection and attack techniques are organized within each service directory.
 
 ## 2025-06-07 – Day 1: Amazon ECR
 
