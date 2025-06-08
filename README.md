@@ -8,35 +8,15 @@ All code, notes, and labs are written from scratch — no licensed or proprietar
 
 ## 📁 Repository Structure
 
+```
 cloud-security-learning/
-|
 ├── AWS/
-│   ├── IAM/
-│   │   ├── detection/
-│   │   ├── attacks/
-│   │   ├── response/
-│   │   └── notes.md
-│   ├── ECR/
-│   │   ├── detection/
-│   │   ├── attacks/
-│   │   ├── response/
-│   │   └── notes.md
-│
 ├── Azure/
-│   ├── AzureAD/
-│   │   ├── detection/
-│   │   ├── response/
-│   │   └── notes.md
-│
-├── notes/
-│   └── learning-log.md
-
-├── micro-projects/
-│   ├── ecr-vuln-scan-summary.py
-│   └── rotate-secrets.py
-
+├── GCP/
+├── containers/
+├── learning-log.md
 └── README.md
-
+```
 ---
 
 ## 🔍 Topics Covered
@@ -66,7 +46,7 @@ This repo includes real-world scenarios where I:
 
 ## 🚧 Work in Progress
 
-This is an evolving project. The focus is on building reusable knowledge blocks, rather than showcasing polished products. Daily logs are updated in [`notes/learning-log.md`](./notes/learning-log.md).
+This is an evolving project. The focus is on building reusable knowledge blocks, rather than showcasing polished products. Daily logs are updated in [`learning-log.md`](./learning-log.md).
 
 ---
 
