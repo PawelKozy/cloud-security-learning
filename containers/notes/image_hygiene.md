@@ -40,4 +40,4 @@ Other tools include Grype and Clair.
 ## Runtime Observability
 
 `osquery` can inspect running containers via SQL-like queries. Useful checks include detecting privileged containers, host path mounts, and exposed secrets.
-See the SQL files in `../osquery/` for sample policies.
+See `osquery/container_hunting_queries.sql` for sample policies.
