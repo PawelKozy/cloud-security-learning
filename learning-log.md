@@ -120,3 +120,9 @@ LIMIT 50;
 - Documented the container threat landscape and attack vectors in `containers/Docker/attacks/docker_attack_notes.md`.
 - Created placeholder demos for privilege escalation, namespace escapes, and auditing Docker usage.
 - Added reference material on capabilities, dangerous flags, and escape techniques.
+
+## 2025-06-09 – Container Security: Image Hygiene, Vulnerability Scanning, and Runtime Observability
+- Added example multi-stage Dockerfile using a distroless base under `containers/Docker/examples/`.
+- Wrote `trivy_scan.sh` and `docker_slim_profile.sh` helper scripts in `containers/scripts/`.
+- Created `containers/osquery/` with SQL policies to detect privileged containers, host mounts, and sensitive environment variables.
+- Documented image hygiene and scanning tips in [containers/notes/image_hygiene.md](containers/notes/image_hygiene.md).
