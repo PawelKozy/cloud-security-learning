@@ -1,6 +1,40 @@
 # Learning Log
 
-This log captures daily updates for cloud security experiments. Notes on detection and attack techniques are organized within each service directory.
+This log captures daily updates for cloud security experiments. Notes on detection and attack techniques are organized within each service directory. Newest updates appear first.
+
+## 2025-06-09 – Container Security: Image Hygiene, Vulnerability Scanning, and Runtime Observability
+- Added example multi-stage Dockerfile using a distroless base under `containers/Docker/examples/`.
+- Wrote `trivy_scan.sh` and `docker_slim_profile.sh` helper scripts in `containers/scripts/`.
+- Created `containers/osquery/container_hunting_queries.sql` with queries to detect privileged containers, host mounts, and sensitive environment variables.
+- Documented image hygiene and scanning tips in [containers/notes/image_hygiene.md](containers/notes/image_hygiene.md).
+## 2025-06-08 – Attacking Docker Containers
+- Documented the container threat landscape and attack vectors in `containers/Docker/attacks/docker_attack_notes.md`.
+- Created placeholder demos for privilege escalation, namespace escapes, and auditing Docker usage.
+- Added reference material on capabilities, dangerous flags, and escape techniques.
+## 2025-06-08 – Day 2: Logging and Monitoring
+
+### Tag Immutability
+- Enabled immutable tags through Terraform and verified enforcement with the AWS CLI.
+
+### CloudTrail Logging
+- Configured a trail to capture ECR actions for auditing. Steps documented in [AWS/ECR/notes/ecr-monitoring.md](AWS/ECR/notes/ecr-monitoring.md).
+
+### Athena Queries
+- Created a table over the CloudTrail bucket and executed:
+
+```sql
+SELECT eventTime, eventName, userIdentity.userName
+FROM ecr_cloudtrail_logs
+WHERE eventSource = 'ecr.amazonaws.com'
+ORDER BY eventTime DESC
+LIMIT 50;
+```
+
+### EventBridge Integration
+- Added rules to notify on image pushes. Details in [AWS/ECR/notes/eventbridge.md](AWS/ECR/notes/eventbridge.md).
+
+### Image Scanning Audit
+- Wrote a Python script to report critical scan findings. See [AWS/ECR/scripts/scan_audit.py](AWS/ECR/scripts/scan_audit.py) and [AWS/ECR/notes/scan-audit.md](AWS/ECR/notes/scan-audit.md).
 
 ## 2025-06-07 – Day 1: Amazon ECR
 
@@ -90,39 +124,3 @@ aws ecr put-image-tag-mutability \
   --image-tag-mutability IMMUTABLE
 ```
 
-
-## 2025-06-08 – Day 2: Logging and Monitoring
-
-### Tag Immutability
-- Enabled immutable tags through Terraform and verified enforcement with the AWS CLI.
-
-### CloudTrail Logging
-- Configured a trail to capture ECR actions for auditing. Steps documented in [AWS/ECR/notes/ecr-monitoring.md](AWS/ECR/notes/ecr-monitoring.md).
-
-### Athena Queries
-- Created a table over the CloudTrail bucket and executed:
-
-```sql
-SELECT eventTime, eventName, userIdentity.userName
-FROM ecr_cloudtrail_logs
-WHERE eventSource = 'ecr.amazonaws.com'
-ORDER BY eventTime DESC
-LIMIT 50;
-```
-
-### EventBridge Integration
-- Added rules to notify on image pushes. Details in [AWS/ECR/notes/eventbridge.md](AWS/ECR/notes/eventbridge.md).
-
-### Image Scanning Audit
-- Wrote a Python script to report critical scan findings. See [AWS/ECR/scripts/scan_audit.py](AWS/ECR/scripts/scan_audit.py) and [AWS/ECR/notes/scan-audit.md](AWS/ECR/notes/scan-audit.md).
-
-## 2025-06-08 – Attacking Docker Containers
-- Documented the container threat landscape and attack vectors in `containers/Docker/attacks/docker_attack_notes.md`.
-- Created placeholder demos for privilege escalation, namespace escapes, and auditing Docker usage.
-- Added reference material on capabilities, dangerous flags, and escape techniques.
-
-## 2025-06-09 – Container Security: Image Hygiene, Vulnerability Scanning, and Runtime Observability
-- Added example multi-stage Dockerfile using a distroless base under `containers/Docker/examples/`.
-- Wrote `trivy_scan.sh` and `docker_slim_profile.sh` helper scripts in `containers/scripts/`.
-- Created `containers/osquery/` with SQL policies to detect privileged containers, host mounts, and sensitive environment variables.
-- Documented image hygiene and scanning tips in [containers/notes/image_hygiene.md](containers/notes/image_hygiene.md).
