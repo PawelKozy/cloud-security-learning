@@ -1,0 +1,19 @@
+{
+  "queries": {
+    "privileged_containers": {
+      "query": "SELECT id, name FROM processes WHERE name='docker' AND cmdline LIKE '%--privileged%';",
+      "interval": 3600,
+      "description": "Detect containers running in privileged mode"
+    },
+    "host_volume_mounts": {
+      "query": "SELECT * FROM mounts WHERE path NOT LIKE '/var/lib/docker/%';",
+      "interval": 3600,
+      "description": "Containers mounting host volumes"
+    },
+    "exposed_docker_socket": {
+      "query": "SELECT * FROM processes WHERE cmdline LIKE '%/var/run/docker.sock%';",
+      "interval": 3600,
+      "description": "Processes accessing the Docker socket"
+    }
+  }
+}

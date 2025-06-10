@@ -1,0 +1,13 @@
+{
+  "defaultAction": "SCMP_ACT_ERRNO",
+  "syscalls": [
+    {
+      "names": ["exit", "read", "write", "rt_sigreturn"],
+      "action": "SCMP_ACT_ALLOW"
+    },
+    {
+      "names": ["clone", "execve"],
+      "action": "SCMP_ACT_ALLOW"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- containers/Docker/tooling/docker-slim-example/before.Dockerfile	2025-06-10 18:04:23.235104999 +0000
++++ containers/Docker/tooling/docker-slim-example/after.Dockerfile	2025-06-10 18:04:25.487110811 +0000
+@@ -1,5 +1,6 @@
+ FROM python:3.11-slim
+ WORKDIR /app
+ COPY . .
+-RUN pip install -r requirements.txt
+-CMD ["python", "app.py"]
++RUN pip install -r requirements.txt --no-cache-dir
++USER nobody
++ENTRYPOINT ["python", "app.py"]
