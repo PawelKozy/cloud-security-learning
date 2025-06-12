@@ -210,18 +210,3 @@ Reflection: *If an attacker gets a foothold via an IAM user, how can your IAM ro
 
 ---
 
-## 🧭 Reflections
-
-- Have you audited your IAM roles and policies for least privilege?
-- Are you using Access Analyzer to detect unintended access?
-- Do you log and alert on `sts:AssumeRole`, `CreateAccessKey`, and `AttachUserPolicy`?
-- Can your incident response team trace session activity back to a human or system?
-
----
-
-Let me know when you’re ready to:
-
-- Add Terraform / Azure CLI / Boto3 IAM setup examples
-- Diagram the `AssumeRole` workflow
-- Expand with common IAM misconfigurations (e.g., privilege escalation via PassRole)
-
