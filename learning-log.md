@@ -6,7 +6,7 @@ This log captures daily updates for cloud security experiments. Notes on detecti
 - Added example multi-stage Dockerfile using a distroless base under `containers/Docker/examples/`.
 - Wrote `trivy_scan.sh` and `docker_slim_profile.sh` helper scripts in `containers/scripts/`.
 - Created `containers/osquery/container_hunting_queries.sql` with queries to detect privileged containers, host mounts, and sensitive environment variables.
-- Documented image hygiene and scanning tips in [containers/notes/image_hygiene.md](Containers/notes/image_hygiene.md).
+- Documented image hygiene and scanning tips in [containers/notes/image_hygiene.md](Containers/image_hygiene.md).
 ## 2025-06-08 – Attacking Docker Containers
 - Documented the container threat landscape and attack vectors in `containers/Docker/attacks/docker_attack_notes.md`.
 - Created placeholder demos for privilege escalation, namespace escapes, and auditing Docker usage.
