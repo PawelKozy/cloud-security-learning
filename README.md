@@ -42,6 +42,16 @@ This repo includes real-world scenarios where I:
 - Deploy Terraform-managed infrastructure (with security focus)
 - Use Boto3 scripts for ECR scanning and secret rotation
 
+
+## Tools/
+
+- [Trivy](./Tools/trivy/)
+- [Clair](./Tools/clair/)
+- [Checkov](./Tools/checkov/)
+- [Osquery](./Tools/osquery/)
+- [Falco](./Tools/falco/)
+- [Grype](./Tools/grype/)
+
 ---
 
 ## 🚧 Work in Progress
