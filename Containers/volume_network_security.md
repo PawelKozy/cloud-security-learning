@@ -69,7 +69,7 @@ Misconfigured container networking and volume handling can lead to lateral movem
   ```
 - **Restrict Host Paths**: Avoid mounting system directories unless absolutely needed.
 - **Avoid Mounting docker.sock**: Never expose Docker socket to untrusted containers.
-- **Temporary Writable Storage with **``:
+- \*\*Temporary Writable Storage with \*\*\`\`:
   ```bash
   docker run --read-only \
     --tmpfs /tmp \
@@ -104,4 +104,3 @@ Misconfigured container networking and volume handling can lead to lateral movem
 Network and volume misconfigurations are among the most common and critical container security risks. By applying segmentation, denying unnecessary communication, enforcing encryption, and using secure volume mounts, you reduce your attack surface and prevent lateral movement and privilege escalation.
 
 Apply these principles continuously in CI/CD pipelines, test environments, and production. Security should be enforced by default, not added as an afterthought.
-
