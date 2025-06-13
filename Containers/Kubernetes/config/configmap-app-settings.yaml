@@ -1,0 +1,11 @@
+# Application configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-settings
+  namespace: default
+  labels:
+    app: backend
+data:
+  LOG_LEVEL: "info"
+  FEATURE_X_ENABLED: "true"
