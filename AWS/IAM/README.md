@@ -50,14 +50,21 @@ Best practices:
 
 ## 🛠️ IAM Roles – Temporary and Flexible Access
 
-IAM Roles are identities you assume temporarily. They’re not tied to specific users or passwords.
+An IAM Role is a temporary identity that can be assumed by users, services, or other AWS principals. It has two distinct types of policies:
 
-### 🧩 Authentication Flow
+- **Trust Policy**: Defines *who* can assume the role. This is part of the role’s configuration.
+- **Permissions Policy**: Defines *what* actions are allowed once the role is assumed.
 
-1. **A trusted entity** (IAM user, EC2, Lambda) calls `sts:AssumeRole`
-2. **Trust policy** is checked — defines who can assume this role
-3. **STS** returns temporary credentials (AccessKeyId, SecretAccessKey, SessionToken)
-4. The entity uses these credentials to perform actions within the role’s permissions
+These are both attached to the same role, but they serve different purposes. The trust policy is required at creation; the permissions policy is usually added afterward.
+
+### 🔁 Role Assumption Flow Recap:
+
+1. EC2 or another AWS service is configured to use a role.
+2. The trust policy allows that service (e.g., `ec2.amazonaws.com`) to assume the role.
+3. When the instance/application makes AWS API calls, the AWS SDK/CLI fetches temporary credentials from the **Instance Metadata Service (IMDS)**.
+4. STS returns `AccessKeyId`, `SecretAccessKey`, and `SessionToken`, which are used in API calls.
+
+No code inside the EC2 instance needs to explicitly handle `sts:AssumeRole` — it's handled transparently if using the SDK or CLI.
 
 ```json
 {
@@ -171,6 +178,33 @@ Use Switch Role when:
   "Bool": {"aws:MultiFactorAuthPresent": "true"}
 }
 ```
+## 🧱 Resource-Based Policies
+
+Resource-based policies are policies attached **directly to a resource** (like an S3 bucket, Lambda function, or SQS queue). They define *who can access* the resource and *what they can do*, independently of IAM identity policies.
+
+### 🧪 Example S3 Bucket Policy (Resource-Based)
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::111122223333:user/ExternalUser"
+      },
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::my-bucket/*"
+    }
+  ]
+}
+```
+
+### 🔍 Key Differences from IAM Identity Policies:
+
+- Resource policies include a `Principal` (identity policies do not).
+- They allow cross-account access **without needing to assume a role**.
+- AWS evaluates both identity and resource policies when deciding access.
 
 Reflection: *What’s the implication of allowing wildcards in Action or Resource?*
 
