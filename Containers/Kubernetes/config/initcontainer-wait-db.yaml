@@ -1,0 +1,19 @@
+# Pod with init container waiting for database
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-wait-db
+spec:
+  initContainers:
+  - name: wait-db
+    image: busybox:1.36
+    command: ['sh', '-c', 'until nc -z db 5432; do sleep 2; done']
+  containers:
+  - name: app
+    image: nginx:1.25-alpine
+    ports:
+    - containerPort: 80
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
