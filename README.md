@@ -51,6 +51,11 @@ This repo includes real-world scenarios where I:
 - [Osquery](./Tools/osquery/)
 - [Falco](./Tools/falco/)
 - [Grype](./Tools/grype/)
+- [kube-bench](./Tools/kube-bench/)
+- [kubeaudit](./Tools/kubeaudit/)
+- [Kyverno/OPA](./Tools/kyverno-opa/)
+- [k9s](./Tools/k9s/)
+- [kubectl sniff](./Tools/kubectl-sniff/)
 
 ---
 

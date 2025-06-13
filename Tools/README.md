@@ -17,6 +17,11 @@ This section provides an overview of tools commonly used for container security,
 | **Grype**   | CVE scanner for container images and SBOMs         | Images, file systems, SBOMs              | Secure builds with Syft integration                           |
 | **Falco**   | Runtime security monitoring via eBPF/syscalls      | Running container behavior               | Real-time detection of suspicious container activity          |
 | **osquery** | Endpoint observability tool                        | Host processes, network, file integrity  | Threat hunting and incident response on Linux/macOS           |
+| **kube-bench** | Kubernetes CIS benchmark checker                 | Cluster nodes & master configs           | Validate compliance and hardening efforts                     |
+| **kubeaudit** | Audits Kubernetes security settings              | Pod specs & cluster policies             | Identify misconfigurations quickly                            |
+| **Kyverno/OPA** | Policy-as-code engines for Kubernetes           | Admission requests & resources           | Enforce custom security and governance policies               |
+| **k9s**    | Terminal UI for cluster management                | Live Kubernetes resources                | Real-time monitoring and troubleshooting                      |
+| **kubectl sniff** | Packet capture plugin for kubectl              | Pod network interfaces                   | Debug network traffic within clusters                         |
 
 ---
 
@@ -189,6 +194,11 @@ Supports live and scheduled queries. Useful for:
 | Get real-time detection of container exploits      | ✅ Falco             |
 | Query Linux/macOS systems during incident response | ✅ osquery           |
 | Create and scan SBOMs for CVEs                     | ✅ Syft + Grype      |
+| Check Kubernetes cluster compliance                | ✅ kube-bench        |
+| Audit Kubernetes configurations                    | ✅ kubeaudit         |
+| Enforce admission policies                         | ✅ Kyverno or OPA    |
+| Troubleshoot clusters from the terminal            | ✅ k9s               |
+| Capture pod network traffic                        | ✅ kubectl sniff     |
 
 ---
 
