@@ -25,7 +25,7 @@ metadata:
 
 ### 🔹 GCP: Workload Identity
 
-- Maps a Kubernetes SA to a **Google Cloud IAM Service Account**.
+- Maps a Kubernetess SA to a **Google Cloud IAM Service Account**.
 - Enables federated identity using GCP STS and IAM policy bindings.
 
 ```bash
