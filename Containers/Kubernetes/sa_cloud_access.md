@@ -25,7 +25,7 @@ metadata:
 
 ### 🔹 GCP: Workload Identity
 
-- Maps a Kubernetess SA to a **Google Cloud IAM Service Account**.
+- Maps a Kubernetes SA to a **Google Cloud IAM Service Account**.
 - Enables federated identity using GCP STS and IAM policy bindings.
 
 ```bash
@@ -35,7 +35,7 @@ gcloud iam service-accounts add-iam-policy-binding \
   --role="roles/storage.objectViewer"
 ```
 
-- Pod receivess a projected token that GCP accepts to mint access tokens.
+- Pod receives a projected token that GCP accepts to mint access tokens.
 - **Used for**: GCS, BigQuery, Secret Manager, PubSub access.
 
 ### 🔹 Azure: Pod Managed Identity (Preview / evolving)
@@ -62,6 +62,43 @@ gcloud iam service-accounts add-iam-policy-binding \
 
 ---
 
+## 🕵️ How to Identify If an SA Token Is Intended for Cloud Access
+
+### 1. Inspect the Token's JWT Fields
+Use a decoder such as `jwt.io` or the CLI:
+```bash
+cat /var/run/secrets/kubernetes.io/serviceaccount/token | base64 -d | jq
+```
+Check:
+- **aud (audience)**:
+  - `https://kubernetes.default.svc` → for Kubernetes API only
+  - `sts.amazonaws.com`, `accounts.google.com`, etc. → for cloud APIs
+- **iss (issuer)**:
+  - Cluster-local OIDC issuer (EKS/GKE configured OIDC provider)
+
+### 2. Check for Cloud-Specific Annotations
+```bash
+kubectl get sa <sa-name> -n <namespace> -o yaml
+```
+Look for:
+- AWS: `eks.amazonaws.com/role-arn`
+- Azure/GCP: workload identity annotations or policy bindings
+
+### 3. Inspect Token Volume Mounts
+Tokens used for cloud auth may appear in:
+- `/var/run/secrets/eks.amazonaws.com/serviceaccount/token`
+- `/var/run/secrets/gcp-iam/token`
+- Custom `projected` volume sources in PodSpec
+
+### 4. Observe External Token Exchanges
+If the pod is contacting:
+- AWS STS API (`sts:AssumeRoleWithWebIdentity`)
+- GCP STS (`securitytoken.googleapis.com`)
+- Azure Entra endpoints (`login.microsoftonline.com`)
+... then it's using cloud federation.
+
+---
+
 ## 🔍 Detection Ideas
 
 - **Audit cloud API calls** originating from the node or pod identity.
@@ -75,7 +112,7 @@ gcloud iam service-accounts add-iam-policy-binding \
 
 - Use **fine-grained IAM roles** mapped to purpose-specific SAs.
 - Restrict token audience and duration.
-- Use \`\` for pods that don’t need API access.
+- Use `automountServiceAccountToken: false` for pods that don’t need API access.
 - Monitor and alert on cloud API access anomalies from federated pods.
 
 ---
