@@ -20,6 +20,11 @@ This document focuses on how attackers abuse SA tokens in real-world scenarios a
 
 ## 🔍 Reconnaissance from Within a Compromised Pod
 
+### Getting kubectl or Using the API Endpoint
+Many minimal container images lack **kubectl**. If it's missing, you can:
+- Copy the `kubectl` binary into the pod so you can run the usual commands.
+- Or skip the binary and issue raw API requests with `curl` and the ServiceAccount token.
+
 ### 1. Check if a Token is Mounted
 ```bash
 ls /var/run/secrets/kubernetes.io/serviceaccount/
