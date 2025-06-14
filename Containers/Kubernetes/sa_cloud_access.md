@@ -35,7 +35,7 @@ gcloud iam service-accounts add-iam-policy-binding \
   --role="roles/storage.objectViewer"
 ```
 
-- Pod receives a projected token that GCP accepts to mint access tokens.
+- Pod receivess a projected token that GCP accepts to mint access tokens.
 - **Used for**: GCS, BigQuery, Secret Manager, PubSub access.
 
 ### 🔹 Azure: Pod Managed Identity (Preview / evolving)
