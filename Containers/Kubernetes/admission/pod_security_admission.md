@@ -56,42 +56,65 @@ Error from server: pod podname is forbidden: violates PodSecurity "restricted": 
 
 ---
 
+## 🧪 PSA Practical Walkthrough (warn → enforce)
+
+This hands-on example walks through PSA label application and validation using the `baseline` profile.
+
+### Step 1: Create Namespace with `warn` Mode
+
+```bash
+kubectl create namespace dev
+kubectl label namespace dev pod-security.kubernetes.io/warn=baseline
+```
+
+This allows deploying non-compliant pods while displaying security warnings to the user.
+
+### Step 2: Deploy a Privileged Pod
+
+```yaml
+# privileged-pod.yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-privileged
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    securityContext:
+      privileged: true
+```
+
+```bash
+kubectl apply -f privileged-pod.yaml -n dev
+```
+
+✅ The pod will deploy, but `kubectl` displays a warning message.
+
+### Step 3: Escalate to `enforce` Mode
+
+```bash
+kubectl label namespace dev pod-security.kubernetes.io/enforce=baseline --overwrite
+```
+
+This makes the baseline policy mandatory.
+
+### Step 4: Reapply the Same Pod
+
+```bash
+kubectl apply -f privileged-pod.yaml -n dev
+```
+
+❌ Deployment fails. PSA blocks the privileged pod as it violates the `baseline` standard.
+
+---
+
 ## 🔧 Best Practices
 
 - Start with `warn` and `audit` to avoid breaking workloads
 - Gradually introduce `enforce` in development and then production
 - Document namespace policies clearly for developers
 - Combine PSA with external tools like Gatekeeper/Kyverno for non-pod resources
-
----
-
-## 🔍 Example: Restricting a Namespace
-
-```bash
-kubectl create ns prod-secure
-kubectl label ns prod-secure \
-  pod-security.kubernetes.io/enforce=restricted \
-  pod-security.kubernetes.io/audit=restricted \
-  pod-security.kubernetes.io/warn=restricted
-```
-
-Then try creating a privileged pod:
-
-```yaml
-apiVersion: v1
-kind: Pod
-metadata:
-  name: badpod
-spec:
-  containers:
-  - name: breakme
-    image: busybox
-    command: ["sh"]
-    securityContext:
-      privileged: true
-```
-
-This should be **blocked** by the `restricted` profile.
 
 ---
 
