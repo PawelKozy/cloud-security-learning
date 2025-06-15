@@ -1,72 +1,92 @@
-# ☁️ Cloud Security Learning Lab
+# ☁️ cloud-security-learning
 
-This repository documents my hands-on journey in cloud and application security across major platforms like **AWS**, **Azure**, and **GCP**. It blends practical experiments, real-world attack-defense simulations, detection engineering, and automation workflows into a structured and evolving knowledge base.
+**cloud-security-learning** is a structured knowledge base and hands-on reference built from practical experience across cloud platforms (AWS, Azure, GCP), container security (Docker, Kubernetes), and detection engineering practices.
 
-All code, notes, and labs are written from scratch — no licensed or proprietary content is included.
+This repository captures real-world learning, adversary emulation results, and research-driven notes from building and validating detections, conducting incident response, and exploring cloud-native security controls.
 
 ---
 
-## 📁 Repository Structure
+## 🎯 Goal
+
+To consolidate high-impact, technically accurate, and opinionated learning artifacts that reflect practical security engineering work in:
+
+- 🔐 Cloud security (identity and access hardening, secure configuration, logging and monitoring practices)
+- ⚙️ Infrastructure security (host and container hardening, runtime analysis, and system-level observability)
+- 🛡️ Detection engineering (tuned logic, adversary realism, edge-case handling, and response automation)
+- 🧪 Purple teaming & emulation-driven detection building to close visibility and coverage gaps
+
+This repository serves both as a **portfolio of work** and a **living reference** for applied cloud security knowledge — grounded in real scenarios faced during detection engineering, threat hunting, and incident response.
+
+---
+
+## 📦 What’s Inside?
+
+Directory structure mirrors the domains covered:
 
 ```
-cloud-security-learning/
+cloudsec-repo/
 ├── AWS/
+│   └── IAM/, ECR/, EC2/...
 ├── Azure/
+│   └── Sentinel/, Logic-Apps/, Defender/...
 ├── GCP/
-├── containers/
-├── learning-log.md
-└── README.md
+│   └── IAM/, GCS/...
+├── Containers/
+│   ├── Docker/
+│   └── Kubernetes/
+└── learning-log.md
 ```
----
 
-## 🔍 Topics Covered
+Each product or service is broken down into:
 
-- Identity and access abuse detection
-- Container image scanning and hardening (ECR, ACR)
-- Infrastructure misconfiguration and runtime hardening
-- Automation with Python (Boto3), AWS CLI, and Terraform
-- Cloud-native incident response (IR) playbooks
-- Threat modeling and defensive baselining
-- Telemetry design for multi-cloud environments
-- Working with services like CloudTrail, GuardDuty, Azure Sentinel, etc.
+- `attacks/` → hands-on TTPs & lab reconstructions
+- `detection/` → detection logic, notes, and considerations
+- `config/` → hardening examples and secure defaults
+- `notes.md` → walkthroughs, best practices, and curated insights
 
 ---
 
-## 🛠️ Labs & Tools
+## 🔍 Scope and Focus
 
-This repo includes real-world scenarios where I:
+This repository is a living, evolving workspace built to sharpen cloud and infrastructure security skills — with an emphasis on hands-on learning, real-world misconfiguration analysis, and defense-in-depth design.
 
-- Simulate cloud attacks (e.g., IAM privilege escalation, SSRF)
-- Write detection-as-code logic in SQL/KQL
-- Automate remediation tasks using Lambda, Logic Apps, and SOAR APIs
-- Deploy Terraform-managed infrastructure (with security focus)
-- Use Boto3 scripts for ECR scanning and secret rotation
+The focus aligns with responsibilities typically expected of infrastructure and cloud security engineers:
 
+- Implementing secure-by-default configurations across cloud platforms (AWS, Azure, GCP)
+- Designing layered defenses around identity, secrets, workloads, and network boundaries
+- Investigating runtime behavior and securing containerized systems (Kubernetes, Docker)
+- Enforcing least privilege through IAM, policies, and cluster RBAC
+- Building and validating threat scenarios to test assumptions and visibility gaps
+- Documenting secure patterns and response-ready configurations (e.g., hardening templates, baseline policies)
 
-## Tools/
-
-- [Trivy](./Tools/trivy/)
-- [Clair](./Tools/clair/)
-- [Checkov](./Tools/checkov/)
-- [Osquery](./Tools/osquery/)
-- [Falco](./Tools/falco/)
-- [Grype](./Tools/grype/)
-- [kube-bench](./Tools/kube-bench/)
-- [kubeaudit](./Tools/kubeaudit/)
-- [Kyverno/OPA](./Tools/kyverno-opa/)
-- [k9s](./Tools/k9s/)
-- [kubectl sniff](./Tools/kubectl-sniff/)
+This is not a finished portfolio — but a security engineering journal in motion.
 
 ---
 
-## 🚧 Work in Progress
+## 🚧 What's Next
 
-This is an evolving project. The focus is on building reusable knowledge blocks, rather than showcasing polished products. Daily logs are updated in [`learning-log.md`](./learning-log.md).
+Upcoming additions will focus on:
+
+- Strengthening real-world hardening references for IAM, Kubernetes, and cloud workloads
+- Improving coverage of secrets lifecycle and secure system bootstrapping
+- Showcasing end-to-end patterns for building, securing, and validating cloud-native systems
+
+This direction is shaped by what’s valuable in production, not what’s trendy in training.
 
 ---
 
-## 🙋‍♂️ Why This Repo?
+## 🧠 Philosophy
 
-- **To stay sharp** in an ever-evolving threat landscape    
-- **To bridge gaps** between theory and practice in cloud security    
-- **To demonstrate practical expertise** through reproducible labs and detection logic    
+This project values:
+
+- 📚 *Learning through doing* — test, break, and reassemble
+- 🧩 *Context over checklist* — focus on **why** something matters
+- 🛠️ *Clarity over complexity* — simplified, not simplistic
+- 📈 *Continuous iteration* — nothing is final, everything evolves
+
+---
+
+## 🤖 Assisted by AI
+
+Some sections, explanations, and markdown formatting have been partially assisted by AI to improve clarity, structure, and documentation quality. All technical material is reviewed, refined, and based on hands-on experience.
+
