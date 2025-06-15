@@ -1,43 +1,162 @@
-# Container Image Hygiene
+# 🧼 Container Image Hygiene Best Practices
 
-These notes outline minimal image practices, scanning workflows, and runtime observability techniques.
+Secure container workloads start with secure images. Poor image hygiene can lead to vulnerabilities, credential leaks, bloated attack surfaces, and unstable builds. This guide outlines best practices for building, maintaining, and validating secure container images.
 
-## Image Minimization
+---
 
-- Prefer distroless or other minimal base images to reduce attack surface.
-- Use multi-stage builds so that compilers and tooling never ship in the final image.
-- Tools like `docker-slim` can remove unused binaries and generate seccomp profiles.
+## 🛠️ Image Build Best Practices
 
-Example multi-stage Dockerfile:
+### ✅ Use Minimal Base Images
 
-```Dockerfile
-FROM golang:1.21 AS builder
-WORKDIR /src
+- Use `distroless`, `alpine`, or custom scratch-based images
+- Avoid large distributions (e.g., full Debian, Ubuntu) unless required
+- Benefits: smaller attack surface, faster builds, fewer vulnerabilities
+
+### ✅ Pin Image Digests
+
+- Avoid using `latest` or floating tags
+
+```dockerfile
+FROM python:3.11.5@sha256:<digest>
+```
+
+- Ensures immutability and reproducibility of builds
+
+### ✅ Multi-stage Builds
+
+- Separate build-time tools from final runtime image
+
+```dockerfile
+FROM golang:1.21 as builder
+WORKDIR /app
 COPY . .
-RUN CGO_ENABLED=0 go build -o /app
+RUN go build -o app
 
-FROM gcr.io/distroless/static
+FROM distroless/static
 COPY --from=builder /app /app
 ENTRYPOINT ["/app"]
 ```
 
-## Secrets Management
+- Keeps final image lean and secure
 
-- Never bake credentials into Dockerfiles.
-- Inject secrets at runtime via environment variables or mounted files.
+### ✅ Avoid Secrets in Dockerfiles
 
-## Vulnerability Scanning
+- Never hardcode secrets, tokens, or credentials
+- Use build-time variables (`--build-arg`) or external secret management
 
-Run scanners during CI to catch issues before deployment.
-Example using Trivy:
+### ✅ Use .dockerignore
 
-```bash
-trivy image --severity HIGH,CRITICAL --exit-code 1 my-image:latest
+- Exclude unnecessary files (e.g., `.git`, `node_modules`) from context
+
+```dockerignore
+.git
+*.pem
+.env
+node_modules/
 ```
 
-Other tools include Grype and Clair.
+---
 
-## Runtime Observability
+## 🔐 Image Content Security
 
-`osquery` can inspect running containers via SQL-like queries. Useful checks include detecting privileged containers, host path mounts, and exposed secrets.
-See `osquery/container_hunting_queries.sql` for sample policies.
+### 🧪 Scan Images for Vulnerabilities
+
+- Use tools like:
+  - `Trivy`
+  - `Grype`
+  - `Clair`
+  - GitHub's Dependabot (for Dockerfiles)
+- Scan both OS packages and language-level deps (e.g., pip, npm)
+
+### 🧬 Analyze for Misconfigurations
+
+- Check for dangerous instructions:
+  - `ADD` instead of `COPY`
+  - Running as root
+  - Unpinned packages
+  - Exposed ports
+
+### 👤 Run as Non-Root
+
+Add to your Dockerfile or Kubernetes manifest:
+
+```dockerfile
+USER 1001
+```
+
+Or in Kubernetes:
+
+```yaml
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1001
+```
+
+### 🧹 Clean Up After Install
+
+- Remove unnecessary build tools or caches
+
+```dockerfile
+RUN apt-get update && apt-get install -y build-essential \
+    && make \
+    && apt-get purge -y build-essential \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+---
+
+## 📦 Registry Hygiene
+
+### 🔒 Use Private Registries When Possible
+
+- Prevents public scraping of potentially sensitive builds
+- Enforce access controls and audit logging
+
+### 🧯 Sign and Verify Images
+
+- Use **Sigstore** (`cosign`) or **Notary v2** to sign images
+- Integrate image verification into admission control:
+
+```yaml
+policy:
+  images:
+    requireSignature: true
+```
+
+### 📜 Set Retention & Tagging Policies
+
+- Avoid clutter and stale images
+- Tag images semantically (`app:v1.0.1`)
+- Use lifecycle policies to prune unused builds
+
+---
+
+## 🧪 Runtime Hardening via Image Settings
+
+### 🛑 Read-Only Filesystem
+
+```yaml
+securityContext:
+  readOnlyRootFilesystem: true
+```
+
+### ✂️ Drop Unused Capabilities
+
+```yaml
+securityContext:
+  capabilities:
+    drop: ["ALL"]
+```
+
+### 🔎 Set EntryPoint Explicitly
+
+- Avoid relying on base image `CMD`
+
+```dockerfile
+ENTRYPOINT ["/usr/local/bin/app"]
+```
+
+\
+Following strong image hygiene practices is a foundational step in securing containerized workloads. It not only improves security but also enhances performance, observability, and maintainability across the SDLC.
+
